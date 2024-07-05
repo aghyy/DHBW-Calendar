@@ -105,12 +105,6 @@ li.event {
     transition: height 0.3s, transform 0.3s;
 }
 
-li.event:hover {
-    min-height: fit-content;
-    transform: scale(1.05);
-    z-index: 99999;
-}
-
 li.event h3 {
     margin: 0 0 10px;
 }
@@ -301,6 +295,15 @@ li.event p {
 
 .h18_00 {
     grid-area: h18_00 / time;
+}
+
+@media (hover: hover),
+(-ms-high-contrast:none) {
+    li.event:hover {
+        min-height: fit-content;
+        transform: scale(1.05);
+        z-index: 99999;
+    }
 }
 
 @media only screen and (max-width: 1000px) {}
