@@ -31,7 +31,7 @@
     grid-template-columns:
         [time] auto [mon] 1fr [tue] 1fr [wed] 1fr [thu] 1fr [fri] 1fr [end-col];
     grid-template-rows:
-        [day] auto [h08_00] 1fr [h08_15] 1fr [h08_30] 1fr [h08_45] 1fr [h09_00] 1fr [h09_15] 1fr [h09_30] 1fr [h09_45] 1fr [h10_00] 1fr [h10_15] 1fr [h10_30] 1fr [h10_45] 1fr [h11_00] 1fr [h11_15] 1fr [h11_30] 1fr [h11_45] 1fr [h12_00] 1fr [h12_15] 1fr [h12_30] 1fr [h12_45] 1fr [h13_00] 1fr [h13_15] 1fr [h13_30] 1fr [h13_45] 1fr [h14_00] 1fr [h14_15] 1fr [h14_30] 1fr [h14_45] 1fr [h15_00] 1fr [h15_15] 1fr [h15_30] 1fr [h15_45] 1fr [h16_00] 1fr [h16_15] 1fr [h16_30] 1fr [h16_45] 1fr [h17_00] 1fr [h17_15] 1fr [h17_30] 1fr [h17_45] 1fr [h18_00] 1fr [end-row];
+        [day] auto [h08_00] 1fr [h08_15] 1fr [h08_30] 1fr [h08_45] 1fr [h09_00] 1fr [h09_15] 1fr [h09_30] 1fr [h09_45] 1fr [h10_00] 1fr [h10_15] 1fr [h10_30] 1fr [h10_45] 1fr [h11_00] 1fr [h11_15] 1fr [h11_30] 1fr [h11_45] 1fr [h12_00] 1fr [h12_15] 1fr [h12_30] 1fr [h12_45] 1fr [h13_00] 1fr [h13_15] 1fr [h13_30] 1fr [h13_45] 1fr [h14_00] 1fr [h14_15] 1fr [h14_30] 1fr [h14_45] 1fr [h15_00] 1fr [h15_15] 1fr [h15_30] 1fr [h15_45] 1fr [h16_00] 1fr [h16_15] 1fr [h16_30] 1fr [h16_45] 1fr [h17_00] 1fr [h17_15] 1fr [h17_30] 1fr [h17_45] 1fr [h18_00] 1fr [h18_15] 1fr [h18_30] 1fr [h18_45] 1fr [h19_00] 1fr [end-row];
 }
 
 .calendar li {
@@ -59,16 +59,12 @@ li.day.fri {
     border-right: none;
 }
 
-.calendar li:not(.day, .corner, .time):nth-child(5n+2) {
-    border-right: none;
-}
-
 li.time:nth-of-type(4n+1),
 li.border-li {
     border-bottom: var(--week-grid-border);
 }
 
-li.time.h18_00 {
+li.time.h19_00 {
     border-bottom: none;
 }
 
@@ -98,6 +94,7 @@ li.event {
     width: calc(100% - 10px - 20px);
     margin-right: 10px;
     padding: 10px;
+    border: none !important;
     border-radius: 7px;
     font-size: 85%;
     overflow-y: scroll;
@@ -107,10 +104,14 @@ li.event {
 
 li.event h3 {
     margin: 0 0 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 li.event p {
     margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .mon {
@@ -295,6 +296,22 @@ li.event p {
 
 .h18_00 {
     grid-area: h18_00 / time;
+}
+
+.h18_15 {
+    grid-area: h18_15 / time;
+}
+
+.h18_30 {
+    grid-area: h18_30 / time;
+}
+
+.h18_45 {
+    grid-area: h18_45 / time;
+}
+
+.h19_00 {
+    grid-area: h19_00 / time;
 }
 
 @media (hover: hover),
