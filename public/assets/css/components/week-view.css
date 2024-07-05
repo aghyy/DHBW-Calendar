@@ -102,6 +102,13 @@ li.event {
     font-size: 85%;
     overflow-y: scroll;
     overflow-x: hidden;
+    transition: height 0.3s, transform 0.3s;
+}
+
+li.event:hover {
+    min-height: fit-content;
+    transform: scale(1.05);
+    z-index: 99999;
 }
 
 li.event h3 {
