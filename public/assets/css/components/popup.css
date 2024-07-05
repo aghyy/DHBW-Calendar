@@ -89,7 +89,7 @@
 .menu-bar {
     width: 200px;
     flex-shrink: 0;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #333;
     padding-right: 20px;
     display: flex;
     flex-direction: column;
@@ -97,9 +97,9 @@
 }
 
 .day-button {
-    background-color: #fafafa;
+    background-color: #333;
     border: none;
-    color: #333;
+    color: #ccc;
     padding: 10px;
     margin: 5px 0;
     cursor: pointer;
@@ -124,7 +124,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background-color: #fafafa;
+    background-color: #333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     width: 100%;
@@ -150,9 +150,10 @@
 }
 
 .meals {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    background-color: #333;
     border-radius: 10px;
-    border: .5px solid #ccc;
+    border: .5px solid #555;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
     padding: 15px;
@@ -166,7 +167,7 @@
 .meal-name {
     font-size: 1.1em;
     font-weight: bold;
-    color: #000;
+    color: #ccc;
     margin-bottom: 5px;
 }
 
@@ -175,7 +176,7 @@
 .meal-type,
 .meal-price {
     font-size: .9em;
-    color: #333;
+    color: #ccc;
     margin: 2px 0;
 }
 
@@ -186,7 +187,7 @@
 
 .meal-price {
     font-weight: bold;
-    color: #000;
+    color: #ccc;
     margin-top: 10px;
 }
 
@@ -219,7 +220,7 @@
 
 .kbcategory {
     flex: 1 1 300px;
-    background-color: #fafafa;
+    background-color: #333;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -263,13 +264,13 @@
 
 .kbdescr {
     font-size: 1.2em;
-    color: #333333;
+    color: #ccc;
 }
 
 .tooltip {
     visibility: hidden;
     width: 250px;
-    background-color: #333;
+    background-color: #555;
     color: #fff;
     text-align: center;
     border-radius: 5px;
@@ -380,10 +381,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #f0f0f0;
-    padding: 20px;
+    /* background-color: #f0f0f0; */
+    padding: 20px 0;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .add-theme-button,
