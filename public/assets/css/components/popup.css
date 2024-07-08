@@ -409,11 +409,11 @@
     margin: 0 20px;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     border-radius: 5px;
     appearance: none;
-    background-color: #fff;
-    color: #333;
+    background-color: #333;
+    color: #fff;
 }
 
 .theme-selector:focus {
