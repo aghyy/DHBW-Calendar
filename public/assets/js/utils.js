@@ -1251,6 +1251,30 @@ const buttonClick = (direction) => {
     }
 }
 
+const onMouseEnterCalendarEvent = (elem) => {
+    let eventBlock = elem.closest('li.event');
+    let originalHeight = window.getComputedStyle(eventBlock).height;
+    
+    eventBlock.style.height = 'fit-content';
+    
+    let fitContentHeight = window.getComputedStyle(eventBlock).height;
+    if (parseFloat(fitContentHeight) > parseFloat(originalHeight)) {
+        eventBlock.style.height = fitContentHeight;
+    } else {
+        eventBlock.style.height = originalHeight;
+    }
+
+    eventBlock.dataset.originalHeight = originalHeight;
+};
+
+const onMouseLeaveCalendarEvent = (elem) => {
+    let eventBlock = elem.closest('li.event');
+    if (eventBlock.dataset.originalHeight) {
+        eventBlock.style.height = eventBlock.dataset.originalHeight;
+        delete eventBlock.dataset.originalHeight;
+    }
+};
+
 // event listeners
 // window.addEventListener('resize', updateWeekDates);
 document.addEventListener('keydown', debounce(handleKeyPress, 300));

@@ -35,7 +35,7 @@
     
     <!-- only show the first lesson of the overlapping ones -->
     <xsl:if test="$overlap-count = 1 or (not($overlap) or (count(preceding-sibling::lesson[not(substring-before(begin, '_') * 60 + substring-after(begin, '_') &gt;= $end-minutes or substring-before(end, '_') * 60 + substring-after(end, '_') &lt;= $begin-minutes)]) = 0))">
-      <li class="event">
+      <li class="event" onmouseenter="onMouseEnterCalendarEvent(this);" onmouseleave="onMouseLeaveCalendarEvent(this);">
         <xsl:attribute name="style">
           <xsl:text>grid-column: </xsl:text>
           <xsl:value-of select="$day"/>

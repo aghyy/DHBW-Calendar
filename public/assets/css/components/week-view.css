@@ -317,7 +317,6 @@ li.event p {
 @media (hover: hover),
 (-ms-high-contrast:none) {
     li.event:hover {
-        min-height: fit-content;
         transform: scale(1.05);
         z-index: 99999;
     }
