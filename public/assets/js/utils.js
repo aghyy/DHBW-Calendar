@@ -508,7 +508,7 @@ const getTextColorVar = (eventBlock) => {
 }
 
 const isColorBright = (rgb) => {
-    let y = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+    let y = (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) * 0.75;
     return y > 128;
 };
 
