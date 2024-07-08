@@ -1263,15 +1263,12 @@ const onMouseEnterCalendarEvent = (elem) => {
     } else {
         eventBlock.style.height = originalHeight;
     }
-
-    eventBlock.dataset.originalHeight = originalHeight;
 };
 
 const onMouseLeaveCalendarEvent = (elem) => {
     let eventBlock = elem.closest('li.event');
-    if (eventBlock.dataset.originalHeight) {
-        eventBlock.style.height = eventBlock.dataset.originalHeight;
-        delete eventBlock.dataset.originalHeight;
+    if (eventBlock) {
+        eventBlock.style.removeProperty('height');
     }
 };
 
