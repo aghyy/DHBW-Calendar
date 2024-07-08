@@ -128,7 +128,7 @@
               substring-before(end, '_') * 60 + substring-after(end, '_') &lt;= $begin-minutes)
           ]) > 1">
         <li class="event" style="grid-column: {$day}; grid-row: h{$begin} / h{$end}; right: 0; width: 40%; margin:0px 10px 0px 0px; background-color: var(--lecture-event);">
-          Es gibt mehrere Vorlesungen zu dieser Zeit, öffnen Sie die Detailansicht, um die restlichen Vorlesungen anzuzeigen.
+          Es gibt mehr als zwei Vorlesungen zu dieser Zeit, öffnen Sie die Detailansicht, um die restlichen Vorlesungen anzuzeigen.
         </li>
       </xsl:if>
     </xsl:if>
