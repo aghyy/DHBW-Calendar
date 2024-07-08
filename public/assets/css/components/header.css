@@ -129,6 +129,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     cursor: pointer;
+    font-size: 11px;
 }
 
 #course-input:focus {
