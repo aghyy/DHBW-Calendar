@@ -356,7 +356,15 @@ const applyTheme = () => {
 
     if (themes && themes[selectedTheme]) {
         Object.keys(themes[selectedTheme]).forEach(variable => {
-            document.documentElement.style.setProperty(variable, themes[selectedTheme][variable]);
+            const color = themes[selectedTheme][variable];
+            document.documentElement.style.setProperty(variable, color);
+            if (isColorBright(hexToRgb(color))) {
+                let v = getTextColorVar(variable);
+                document.querySelector(':root').style.setProperty(v, "#000");
+            } else {
+                let v = getTextColorVar(variable);
+                document.querySelector(':root').style.setProperty(v, "#fff");
+            }
         });
     }
 
@@ -486,6 +494,22 @@ const deleteTheme = () => {
     themeSelector.value = 'default';
     localStorage.setItem('selectedTheme', 'default');
     applyTheme();
+};
+
+const getTextColorVar = (eventBlock) => {
+    let eArr = eventBlock.split('-');
+    let eArrNew = [
+        ...eArr.slice(0, 3),
+        'text',
+        'color',
+        ...eArr.slice(3)
+    ];
+    return eArrNew.join('-');
+}
+
+const isColorBright = (rgb) => {
+    let y = 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+    return y > 128;
 };
 
 const openColorPicker = (text, defaultColor, callback) => {
