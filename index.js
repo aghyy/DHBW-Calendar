@@ -348,7 +348,7 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 			let last = new Date('1970-01-01 ' + end);
 			let dif = last.getTime() - first.getTime();
 			let difDate = new Date(dif);
-			let timeDif = `${difDate.getHours() - 1}h ${difDate.getMinutes()}min`
+			let timeDif = `${difDate.getUTCHours()}h ${difDate.getUTCMinutes()}min`
 				.replace('0h ', '')
 				.replace(' 0min', '');
 
