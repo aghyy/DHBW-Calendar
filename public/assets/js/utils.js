@@ -490,6 +490,10 @@ const deleteTheme = () => {
 
 const openColorPicker = (text, defaultColor, callback) => {
     return new Promise(resolve => {
+        let popupBackground = document.createElement("div");
+        popupBackground.classList.add("popup");
+        popupBackground.classList.add("color-picker-popup-bg");
+
         var popup = document.createElement("div");
         popup.classList.add("color-picker-popup");
 
@@ -497,7 +501,7 @@ const openColorPicker = (text, defaultColor, callback) => {
         exitButton.innerHTML = '<ion-icon name="close-outline"></ion-icon>';
         exitButton.classList.add("exit-button");
         exitButton.onclick = function () {
-            document.body.removeChild(popup);
+            document.body.removeChild(popupBackground);
             resolve(null);
         };
 
@@ -512,20 +516,31 @@ const openColorPicker = (text, defaultColor, callback) => {
         submitButton.textContent = "Auswählen";
         submitButton.onclick = function () {
             var selectedColor = colorPicker.value;
-            document.body.removeChild(popup);
+            document.body.removeChild(popupBackground);
             resolve(selectedColor);
             if (callback) {
                 callback(selectedColor);
             }
         };
 
+        popupBackground.addEventListener('click', removeColorPickerPopup);
+        exitButton.addEventListener('click', removeColorPickerPopup);
+
+        popupBackground.appendChild(popup);
+
         popup.appendChild(exitButton);
         popup.appendChild(para);
         popup.appendChild(colorPicker);
         popup.appendChild(submitButton);
 
-        document.body.appendChild(popup);
+        document.body.appendChild(popupBackground);
     });
+};
+
+const removeColorPickerPopup = (event) => {
+    if (event.target.classList.contains('color-picker-popup') || event.target.classList.contains('popup')) {
+        document.body.removeChild(event.target);
+    }
 };
 
 const createCalendarPopup = async (event) => {
@@ -874,7 +889,13 @@ const debounce = (func, delay) => {
 };
 
 const handleKeyPress = (event) => {
-    if (document.querySelector('.color-picker-popup')) {
+    let colorPickerPopup = document.querySelector('.color-picker-popup-bg');
+    if (colorPickerPopup) {
+        if (event.key === 'Escape') {
+            let customEvent = new Event('escape', { bubbles: true, cancelable: true });
+            colorPickerPopup.dispatchEvent(customEvent);
+            removeColorPickerPopup({ target: colorPickerPopup });
+        }
         return;
     }
 
