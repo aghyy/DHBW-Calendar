@@ -370,9 +370,10 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 			let persons = [];
 
 			resources.forEach(elem => {
-				const textContent = elem.textContent.trim();
+				let textContent = elem.textContent.trim();
 
-				if (textContent.includes("Hörsaal") || textContent.includes("Labor")) {
+				if (textContent.includes("Hörsaal") || textContent.includes("Labor") || textContent.includes("Online-Veranstaltung")) {
+					textContent = textContent === "XOnline-Veranstaltung" ? textContent.replace(/X/, "") : textContent;
 					rooms.push(textContent);
 				}
 			});
