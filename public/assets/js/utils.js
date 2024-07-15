@@ -206,7 +206,7 @@ const createSettingsPopup = async () => {
     checkbox.addEventListener('change', () => {
         localStorage.setItem('isCheckboxChecked', checkbox.checked);
 
-        if (selectedCourse === '') {
+        if (selectedCourse !== '') {
             if (checkbox.checked) {
                 localStorage.setItem('previouslySelectedCourse', selectedCourse);
                 localStorageDisplay.textContent = `Zuvor gewählter Kurs: ${selectedCourse}`;
@@ -755,6 +755,13 @@ const loadXML = (url, callback) => {
     };
     xhr.open('GET', url, true);
     xhr.send();
+}
+
+const nsResolver = (prefix) => {
+    const ns = {
+        'xsl': 'http://www.w3.org/1999/XSL/Transform'
+    };
+    return ns[prefix] || null;
 }
 
 const applyXSLT = (xml, xslt, container) => {
