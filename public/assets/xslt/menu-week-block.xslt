@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     
     <!-- Output method -->
-    <xsl:output method="html" indent="yes" />
+    <xsl:output method="xml" indent="yes" />
     
     <!-- Template match for each day element -->
     <xsl:template match="day">

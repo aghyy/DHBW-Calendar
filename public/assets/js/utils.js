@@ -755,14 +755,7 @@ const loadXML = (url, callback) => {
     };
     xhr.open('GET', url, true);
     xhr.send();
-}
-
-const nsResolver = (prefix) => {
-    const ns = {
-        'xsl': 'http://www.w3.org/1999/XSL/Transform'
-    };
-    return ns[prefix] || null;
-}
+};
 
 const applyXSLT = (xml, xslt, container) => {
     const xsltProcessor = new XSLTProcessor();
@@ -1261,9 +1254,9 @@ const buttonClick = (direction) => {
 const onMouseEnterCalendarEvent = (elem) => {
     let eventBlock = elem.closest('li.event');
     let originalHeight = window.getComputedStyle(eventBlock).height;
-    
+
     eventBlock.style.height = 'fit-content';
-    
+
     let fitContentHeight = window.getComputedStyle(eventBlock).height;
     if (parseFloat(fitContentHeight) > parseFloat(originalHeight)) {
         eventBlock.style.height = fitContentHeight;
