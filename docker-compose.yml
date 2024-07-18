@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  dhbw-calendar:
+    build: .
+    ports:
+      - "6059:6059"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run dev
