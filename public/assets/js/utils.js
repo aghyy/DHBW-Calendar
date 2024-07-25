@@ -1106,7 +1106,7 @@ const removeMonthCalendar = () => {
 }
 
 const loadDay = async (course, day, month, year) => {
-    const response = await fetch('http://localhost:6059/api/get_day/', {
+    const response = await fetch('/api/get_day/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1128,7 +1128,7 @@ const loadMenu = async () => {
         return preloadedMenu;
     }
 
-    const response = await fetch('http://localhost:6059/api/get_menu/', {
+    const response = await fetch('/api/get_menu/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1140,7 +1140,7 @@ const loadMenu = async () => {
 }
 
 const loadWeek = async (course, day, month, year) => {
-    const response = await fetch('http://localhost:6059/api/get_week/', {
+    const response = await fetch('/api/get_week/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -1169,7 +1169,7 @@ const loadMonth = async (course, month, year) => {
 
     }
 
-    const response = await fetch('http://localhost:6059/api/get_month/', {
+    const response = await fetch('/api/get_month/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
