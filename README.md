@@ -35,6 +35,42 @@ To install and set up the DHBW Calendar, follow these steps:
     npm start
     ```
 
+4. **Access the Application**:
+    - Open your web browser and navigate to `http://localhost:6059` to access the DHBW Calendar.
+
+## Docker Support
+We also support Docker for easy deployment and management. Docker Compose is already available in the repository for your convenience.
+
+### Steps to Get Started with Docker
+
+1. **Install Docker**:
+    - Follow the instructions on the [Docker website](https://docs.docker.com/get-docker/) to install Docker on your system.
+  
+2. **Install Docker Compose**:
+    - Follow the instructions on the [Docker Compose website](https://docs.docker.com/compose/install/) to install Docker Compose.
+
+3. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/aghyy/DHBW-Calendar.git
+    ```
+4. **Navigate to the Project Directory**:
+    ```bash
+    cd /path-to/DHBW-Calendar
+    ```
+
+5. **Run the Application with Docker Compose**:
+    ```bash
+    docker-compose up
+    ```
+
+6. **Access the Application**:
+    - Open your web browser and navigate to `http://localhost:6059` to access the DHBW Calendar.
+
+7. **Stop the Application with Docker Compose**:
+    ```bash
+    docker-compose down
+    ```
+
 ## Usage
 - **Navigating the Calendar**:
   - Use arrow keys for quick navigation between the months/weeks.
@@ -46,7 +82,7 @@ To install and set up the DHBW Calendar, follow these steps:
   - Click on the "Keypad" icon at the top to see an overview of all shortcuts.
 
 - **Viewing Food Menu**:
-  - Click on the "Food Menu" icon at the top to see the weeks offerings at the DHBW Casino.
+  - Click on the "Food Menu" icon at the top to see the week's offerings at the DHBW Casino.
 
 - **Accessing Moodle**:
   - Click on the "Moodle" icon at the top to log in and access your courses.
