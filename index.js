@@ -99,17 +99,36 @@ const foodAdditionsSplitAndJoin = (str) => {
 }
 
 const getXMLForDay = (xmlString, dayId) => {
-	const dayRegex = new RegExp(`<day\\s+id=['"]${dayId}['"][^>]*>(.*?)<\/day>`, 's');
-	const match = xmlString.match(dayRegex);
+    const dayRegex = new RegExp(`<day\\s+id=['"]${dayId}['"][^>]*>(.*?)<\/day>`, 's');
+    const match = xmlString.match(dayRegex);
 
-	if (!match) {
-		return '';
-	}
+    if (!match) {
+        return '';
+    }
 
-	const xmlStringForDay = match[0];
-	const fullXMLForDay = `<?xml version='1.0' encoding='UTF-8'?><calendar>${xmlStringForDay}</calendar>`;
+    const xmlStringForDay = match[0];
+    const fullXMLForDay = `<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE calendar [
+    <!ELEMENT calendar (day+)>
+    <!ELEMENT day (lesson+)>
+    <!ATTLIST day id CDATA #REQUIRED>
 
-	return fullXMLForDay;
+    <!ELEMENT lesson (name, person, room, total_time, begin, end, holiday, exam, lecture, other_event, voluntary)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT person (#PCDATA)>
+    <!ELEMENT room (#PCDATA)>
+    <!ELEMENT total_time (#PCDATA)>
+    <!ELEMENT begin (#PCDATA)>
+    <!ELEMENT end (#PCDATA)>
+    <!ELEMENT holiday (#PCDATA)>
+    <!ELEMENT exam (#PCDATA)>
+    <!ELEMENT lecture (#PCDATA)>
+    <!ELEMENT other_event (#PCDATA)>
+    <!ELEMENT voluntary (#PCDATA)>
+]>
+<calendar>${xmlStringForDay}</calendar>`;
+
+    return fullXMLForDay;
 };
 
 const createSubarrays = (array) => {
@@ -149,40 +168,67 @@ const checkEmptyObjects = (arr) => {
 }
 
 const parseWeekToXml = (listOfLectureCurrentWeek) => {
-	const daysOfWeek = ["mon", "tue", "wed", "thu", "fri"];
+    const daysOfWeek = ["mon", "tue", "wed", "thu", "fri"];
 
-	let lessonsByDay = {}; // Object to accumulate lessons for each day
+    let lessonsByDay = {}; // Object to accumulate lessons for each day
 
-	// Group lessons by day
-	daysOfWeek.forEach(day => {
-		lessonsByDay[day] = listOfLectureCurrentWeek.filter(obj => obj.week_day === day).map(lesson => ({
-			name: lesson.name,
-			person: lesson.person,
-			room: lesson.room,
-			total_time: lesson.total_time,
-			begin: lesson.begin,
-			end: lesson.end,
-			holiday: lesson.holiday,
-			exam: lesson.exam,
-			lecture: lesson.lecture,
-			other_event: lesson.other_event,
-			voluntary: lesson.voluntary
-		}));
-	});
+    // Group lessons by day
+    daysOfWeek.forEach(day => {
+        lessonsByDay[day] = listOfLectureCurrentWeek.filter(obj => obj.week_day === day).map(lesson => ({
+            name: lesson.name,
+            person: lesson.person,
+            room: lesson.room,
+            total_time: lesson.total_time,
+            begin: lesson.begin,
+            end: lesson.end,
+            holiday: lesson.holiday,
+            exam: lesson.exam,
+            lecture: lesson.lecture,
+            other_event: lesson.other_event,
+            voluntary: lesson.voluntary
+        }));
+    });
 
-	let daysXml = daysOfWeek.map(day => ({
-		"@": {
-			id: day
-		},
-		lesson: lessonsByDay[day]
-	}));
+    let daysXml = daysOfWeek.map(day => ({
+        "@": {
+            id: day
+        },
+        lesson: lessonsByDay[day]
+    }));
 
-	let xmlCalendar = {
-		course: listOfLectureCurrentWeek[0].course,
-		day: daysXml
-	};
+    let xmlCalendar = {
+        course: listOfLectureCurrentWeek[0].course,
+        day: daysXml
+    };
 
-	return js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
+    // Generate the XML string using js2xmlparser
+    let xmlString = js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
+
+    // Insert the DTD declaration into the XML string
+    const dtdString = `
+<!DOCTYPE calendar [
+    <!ELEMENT calendar (course, day+)>
+    <!ELEMENT course (#PCDATA)>
+    <!ELEMENT day (lesson*)>
+    <!ATTLIST day id CDATA #REQUIRED>
+    <!ELEMENT lesson (name, person, room, total_time, begin, end, holiday, exam, lecture, other_event, voluntary)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT person (#PCDATA)>
+    <!ELEMENT room (#PCDATA)>
+    <!ELEMENT total_time (#PCDATA)>
+    <!ELEMENT begin (#PCDATA)>
+    <!ELEMENT end (#PCDATA)>
+    <!ELEMENT holiday (#PCDATA)>
+    <!ELEMENT exam (#PCDATA)>
+    <!ELEMENT lecture (#PCDATA)>
+    <!ELEMENT other_event (#PCDATA)>
+    <!ELEMENT voluntary (#PCDATA)>
+]>`;
+
+    // Insert the DTD declaration into the XML string
+    xmlString = xmlString.replace(/<\?xml version='1.0' encoding='UTF-8'\?>/, `<?xml version='1.0' encoding='UTF-8'?>${dtdString}`);
+
+    return xmlString;
 }
 
 const showDay = (day, month, year) => {
@@ -260,17 +306,55 @@ const parseMonthToXml = (listOfLectureCurrentMonth, month, year) => {
 		day: daysXml
 	};
 
-	return js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
+	// Generate the XML string using js2xmlparser
+	let xmlString = js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
+
+	// Insert the DTD declaration into the XML string
+	const dtdString = `
+<!DOCTYPE calendar [
+    <!ELEMENT calendar (course, day+)>
+    <!ELEMENT course (#PCDATA)>
+    <!ELEMENT day (show, today, day, lesson*)>
+    <!ATTLIST day id CDATA #REQUIRED>
+    <!ELEMENT show (#PCDATA)>
+    <!ELEMENT today (#PCDATA)>
+    <!ELEMENT lesson (name, begin, holiday, exam, lecture, other_event, voluntary)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT begin (#PCDATA)>
+    <!ELEMENT holiday (#PCDATA)>
+    <!ELEMENT exam (#PCDATA)>
+    <!ELEMENT lecture (#PCDATA)>
+    <!ELEMENT other_event (#PCDATA)>
+    <!ELEMENT voluntary (#PCDATA)>
+]>`;
+
+	// Insert the DTD declaration into the XML string
+	xmlString = xmlString.replace(/<\?xml version='1.0' encoding='UTF-8'\?>/, `<?xml version='1.0' encoding='UTF-8'?>${dtdString}`);
+
+	return xmlString;
 }
 
 const parseXmlMenu = (json) => {
 	let dayNames = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 	let index = 0;
-	let xml = '<menu>';
+	let xml = `<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE menu [
+    <!ELEMENT menu (day+)>
+    <!ELEMENT day (day-name, meals)>
+    <!ELEMENT day-name (#PCDATA)>
+    <!ELEMENT meals (meal+)>
+    <!ELEMENT meal (name, allergies, additions, type, price)>
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT allergies (#PCDATA)>
+    <!ELEMENT additions (#PCDATA)>
+    <!ELEMENT type (#PCDATA)>
+    <!ELEMENT price (#PCDATA)>
+]>`;
+
+	xml += '<menu>';
 
 	json.forEach(dayArray => {
 		xml += '<day>';
-
 		xml += `<day-name>${dayNames[index]}</day-name>`;
 
 		dayArray.forEach(dayObject => {
@@ -291,7 +375,6 @@ const parseXmlMenu = (json) => {
 		});
 
 		xml += '</day>';
-
 		index++;
 	});
 
