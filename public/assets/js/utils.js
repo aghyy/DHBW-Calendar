@@ -1289,7 +1289,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     keyboardShortcuts = await getKeyboardShortcuts();
     courses = await getAvailableCourses();
 
-    for (let i = 0; i < 225; i++) { // per quarter hour 5, per hour 20 li elements
+    for (let i = 0; i < 245; i++) { // per quarter hour 5, per hour 20 li elements
         let li = document.createElement('li');
 
         if ((i % 20) >= 15 && (i % 20) < 20) {
