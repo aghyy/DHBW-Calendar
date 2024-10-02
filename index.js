@@ -99,15 +99,15 @@ const foodAdditionsSplitAndJoin = (str) => {
 }
 
 const getXMLForDay = (xmlString, dayId) => {
-    const dayRegex = new RegExp(`<day\\s+id=['"]${dayId}['"][^>]*>(.*?)<\/day>`, 's');
-    const match = xmlString.match(dayRegex);
+	const dayRegex = new RegExp(`<day\\s+id=['"]${dayId}['"][^>]*>(.*?)<\/day>`, 's');
+	const match = xmlString.match(dayRegex);
 
-    if (!match) {
-        return '';
-    }
+	if (!match) {
+		return '';
+	}
 
-    const xmlStringForDay = match[0];
-    const fullXMLForDay = `<?xml version='1.0' encoding='UTF-8'?>
+	const xmlStringForDay = match[0];
+	const fullXMLForDay = `<?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE calendar [
     <!ELEMENT calendar (day+)>
     <!ELEMENT day (lesson+)>
@@ -128,7 +128,7 @@ const getXMLForDay = (xmlString, dayId) => {
 ]>
 <calendar>${xmlStringForDay}</calendar>`;
 
-    return fullXMLForDay;
+	return fullXMLForDay;
 };
 
 const createSubarrays = (array) => {
@@ -168,44 +168,44 @@ const checkEmptyObjects = (arr) => {
 }
 
 const parseWeekToXml = (listOfLectureCurrentWeek) => {
-    const daysOfWeek = ["mon", "tue", "wed", "thu", "fri"];
+	const daysOfWeek = ["mon", "tue", "wed", "thu", "fri"];
 
-    let lessonsByDay = {}; // Object to accumulate lessons for each day
+	let lessonsByDay = {}; // Object to accumulate lessons for each day
 
-    // Group lessons by day
-    daysOfWeek.forEach(day => {
-        lessonsByDay[day] = listOfLectureCurrentWeek.filter(obj => obj.week_day === day).map(lesson => ({
-            name: lesson.name,
-            person: lesson.person,
-            room: lesson.room,
-            total_time: lesson.total_time,
-            begin: lesson.begin,
-            end: lesson.end,
-            holiday: lesson.holiday,
-            exam: lesson.exam,
-            lecture: lesson.lecture,
-            other_event: lesson.other_event,
-            voluntary: lesson.voluntary
-        }));
-    });
+	// Group lessons by day
+	daysOfWeek.forEach(day => {
+		lessonsByDay[day] = listOfLectureCurrentWeek.filter(obj => obj.week_day === day).map(lesson => ({
+			name: lesson.name,
+			person: lesson.person,
+			room: lesson.room,
+			total_time: lesson.total_time,
+			begin: lesson.begin,
+			end: lesson.end,
+			holiday: lesson.holiday,
+			exam: lesson.exam,
+			lecture: lesson.lecture,
+			other_event: lesson.other_event,
+			voluntary: lesson.voluntary
+		}));
+	});
 
-    let daysXml = daysOfWeek.map(day => ({
-        "@": {
-            id: day
-        },
-        lesson: lessonsByDay[day]
-    }));
+	let daysXml = daysOfWeek.map(day => ({
+		"@": {
+			id: day
+		},
+		lesson: lessonsByDay[day]
+	}));
 
-    let xmlCalendar = {
-        course: listOfLectureCurrentWeek[0].course,
-        day: daysXml
-    };
+	let xmlCalendar = {
+		course: listOfLectureCurrentWeek[0].course,
+		day: daysXml
+	};
 
-    // Generate the XML string using js2xmlparser
-    let xmlString = js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
+	// Generate the XML string using js2xmlparser
+	let xmlString = js2xmlparser.parse("calendar", xmlCalendar, { 'declaration': { 'encoding': 'UTF-8' } });
 
-    // Insert the DTD declaration into the XML string
-    const dtdString = `
+	// Insert the DTD declaration into the XML string
+	const dtdString = `
 <!DOCTYPE calendar [
     <!ELEMENT calendar (course, day+)>
     <!ELEMENT course (#PCDATA)>
@@ -225,10 +225,10 @@ const parseWeekToXml = (listOfLectureCurrentWeek) => {
     <!ELEMENT voluntary (#PCDATA)>
 ]>`;
 
-    // Insert the DTD declaration into the XML string
-    xmlString = xmlString.replace(/<\?xml version='1.0' encoding='UTF-8'\?>/, `<?xml version='1.0' encoding='UTF-8'?>${dtdString}`);
+	// Insert the DTD declaration into the XML string
+	xmlString = xmlString.replace(/<\?xml version='1.0' encoding='UTF-8'\?>/, `<?xml version='1.0' encoding='UTF-8'?>${dtdString}`);
 
-    return xmlString;
+	return xmlString;
 }
 
 const showDay = (day, month, year) => {
@@ -379,6 +379,7 @@ const parseXmlMenu = (json) => {
 	});
 
 	xml += '</menu>';
+
 	return xml;
 }
 
@@ -398,6 +399,32 @@ const getXmlMonthData = async (courseName, month, year) => {
 	const parsedXml = parseMonthToXml(fullXml, month, year);
 
 	return parsedXml;
+}
+
+// const getDateOfSpecificDayInWeek = (year, month, randomDay, dayName) => {
+// 	const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+// 	const monthIndex = month - 1;
+// 	const dayIndex = dayNames.indexOf(dayName.toLowerCase());
+// 	const randomDate = new Date(year, monthIndex, randomDay);
+// 	const randomDayOfWeek = randomDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
+// 	let difference = dayIndex - randomDayOfWeek;
+
+// 	if (difference < 0) {
+// 		difference += 7;
+// 	}
+
+// 	const desiredDate = randomDay + difference;
+
+// 	return new Date(year, monthIndex, desiredDate);
+// }
+
+function getDayOfWeek(day, month, year) {
+    const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    
+    const date = new Date(year, month - 1, day);
+	const dayOfWeek = date.getDay();
+    
+    return dayNames[dayOfWeek];
 }
 
 const getXmlForWeek = async (courseName, day, month, year) => {
@@ -444,7 +471,15 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 			let voluntary = name.toLowerCase().includes('ccna');
 			if (voluntary) exam = lecture = other_event = false;
 
-			let weekDay = mapWeekDay(element.querySelectorAll('.tooltip div')[1].textContent.slice(0, 2));
+			let weekdayRegex = /^\d{1,2}\.$/;
+			let weekdayInput = element.querySelectorAll('.tooltip div')[1].textContent.slice(0, 2);
+			let weekDay;
+
+			if (weekdayRegex.test(weekdayInput)) {
+				weekDay = getDayOfWeek(parseInt(weekdayInput.slice(0, 2)), month, year);
+			} else {
+				weekDay = mapWeekDay(weekdayInput);
+			}
 
 			const resources = element.querySelectorAll('.resource');
 			const personElems = element.querySelectorAll('.person');
@@ -488,7 +523,6 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 		}
 
 		let parsedOutput = parseWeekToXml(listOfLectureCurrentWeek);
-
 		return parsedOutput;
 	}
 }
@@ -569,15 +603,16 @@ const getXmlDayMenu = async (url) => {
 		for (const element of meal) {
 			let meals = [];
 			element.querySelectorAll('.aw-meal').forEach((elem) => {
-				let type, allergies, additions, meal, price = undefined;
+				let type, allergies, nutritions, additions, meal, price = undefined;
 				if (elem.querySelector('.aw-meal-description')) {
 					meal = elem.querySelector('.aw-meal-description').textContent;
 				}
 				if (elem.querySelector('.aw-meal-attributes')) {
 					let attributes = elem.querySelector('.aw-meal-attributes > span').innerHTML.replace(/&nbsp;&nbsp;/g, '');
-					type = attributes.split(' ')[0] !== attributes.split(' ')[0].toUpperCase() ? attributes.split(' ')[0] : '';
-					allergies = attributes.includes('ALLERGEN') ? attributes.split('ALLERGEN ')[1].split(' ').join(', ') : 'Keine Allergene';
-					additions = attributes.includes('ZUSATZ') ? foodAdditionsSplitAndJoin(attributes.split('ZUSATZ ')[1].split(' ALLERGEN')[0]) : 'Keine Zusatzstoffe';
+					type = attributes.split(' ')[0] !== attributes.split(' ')[0].toUpperCase() ? attributes.split(' ')[0].replaceAll('&nbsp;', '') : '';
+					allergies = attributes.includes('ALLERGEN') ? attributes.split('ALLERGEN ')[1].split(' NÄHRWERT')[0].split(' ').join(', ').replaceAll('&nbsp;', '') : 'Keine Allergene';
+					nutritions = attributes.includes('NÄHRWERT') ? attributes.split('NÄHRWERT ')[1].split(' ZUSATZ')[0].replaceAll('&nbsp;', '') : 'Keine Nährwerte';
+					additions = attributes.includes('ZUSATZ') ? foodAdditionsSplitAndJoin(attributes.split('ZUSATZ ')[1].split(' ALLERGEN')[0].replaceAll('&nbsp;', '')) : 'Keine Zusatzstoffe';
 				}
 				if (elem.querySelector('.aw-meal-price')) {
 					price = elem.querySelector('.aw-meal-price').textContent;
