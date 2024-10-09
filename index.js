@@ -423,8 +423,33 @@ function getDayOfWeek(day, month, year) {
     
     const date = new Date(year, month - 1, day);
 	const dayOfWeek = date.getDay();
-    
+
     return dayNames[dayOfWeek];
+}
+
+const monthToNumber = (month) => {
+    const months = {
+        januar: 1,
+        februar: 2,
+        märz: 3,
+        april: 4,
+        mai: 5,
+        juni: 6,
+        juli: 7,
+        august: 8,
+        september: 9,
+        oktober: 10,
+        november: 11,
+        dezember: 12
+    };
+
+    const monthLower = month.toLowerCase();
+
+    if (months[monthLower]) {
+        return months[monthLower];
+    } else {
+		return null;
+	}
 }
 
 const getXmlForWeek = async (courseName, day, month, year) => {
@@ -475,9 +500,10 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 			let weekdayRegex = /^\d{1,2}\.$/;
 			let weekdayInput = element.querySelectorAll('.tooltip div')[1].textContent.slice(0, 2);
 			let weekDay;
-
+			
 			if (weekdayRegex.test(weekdayInput)) {
-				weekDay = getDayOfWeek(parseInt(weekdayInput.slice(0, 2)), month, year);
+				let monthOfInput = element.querySelectorAll('.tooltip div')[1].textContent.split(' ')[1].split(' ')[0];
+				weekDay = getDayOfWeek(parseInt(weekdayInput.slice(0, 2)), monthToNumber(monthOfInput), year);
 			} else {
 				weekDay = mapWeekDay(weekdayInput);
 			}
