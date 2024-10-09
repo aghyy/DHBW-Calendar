@@ -465,7 +465,8 @@ const getXmlForWeek = async (courseName, day, month, year) => {
 			let name = element.querySelector('a').innerHTML.split('<br>')[1].split('<span class="tooltip">')[0].replace('</span>', '');
 
 			let holiday = begin == '08:00' && end == '18:00';
-			let exam = element.style.backgroundColor == 'rgb(255, 0, 0)';
+			// let exam = element.style.backgroundColor == 'rgb(255, 0, 0)';
+			let exam = type === 'Prüfung';
 			let lecture = type === 'Lehrveranstaltung';
 			let other_event = type === 'Sonstiger Termin';
 			let voluntary = name.toLowerCase().includes('ccna');
@@ -554,7 +555,8 @@ const getXmlForMonth = async (courseName, month, year, day) => {
 		let name = element.querySelector('a').innerHTML.split('<br>')[1].split('<span class="tooltip">')[0].replace('</span>', '');
 		let end = element.querySelector('.week_block a').textContent.slice(7, 12);
 		let holiday = begin == '08:00' && end == '18:00';
-		let exam = element.style.backgroundColor == 'rgb(255, 0, 0)';
+		// let exam = element.style.backgroundColor == 'rgb(255, 0, 0)';
+		let exam = type === 'Prüfung';
 		let lecture = type === 'Lehrveranstaltung';
 		let other_event = type === 'Sonstiger Termin';
 		let voluntary = name.toLowerCase().includes('ccna');
