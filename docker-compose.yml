@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   dhbw-calendar:
+    image: ghcr.io/aghyy/dhbw-calendar:latest
     build: .
     ports:
       - "6059:6059"
