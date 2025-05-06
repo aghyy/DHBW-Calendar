@@ -11,7 +11,7 @@ let preloadedMenu;
 // defining keyboard shortcuts
 let keyboardShortcuts = {};
 // setting default values
-const defaultDocumentTitle = 'DHBW Kalender';
+const defaultDocumentTitle = 'DHBW Calendar';
 const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 // setting xslt urls
 const xsltDayUrl = 'assets/xslt/calendar-day-block.xslt';
@@ -800,7 +800,7 @@ const setView = (view) => {
 const setCourse = () => {
     selectedCourse = courseInputElem.value;
     if (selectedCourse && selectedCourse !== 'Kurs auswählen') {
-        document.title = `DHBW ${selectedCourse} Kalender`;
+        document.title = `DHBW ${selectedCourse} Calendar`;
         if (localStorage.getItem('isCheckboxChecked') === 'true') {
             window.localStorage.setItem('previouslySelectedCourse', selectedCourse);
         }
